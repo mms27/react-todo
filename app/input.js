@@ -3,12 +3,12 @@ var React = require('react'),
 
 Input = React.createClass({
 	addTodo: function (e) {
-		var target = e.target,
-			value  = this.refs.input.getDOMNode().value;
+		var node  = this.refs.input.getDOMNode(), 
+			value = node.value;
 
 		if (e.key === 'Enter' && value) {
 			this.props.onTodoAdd(value);
-			value = '';
+			node.value = '';
 		}
 	},
 
