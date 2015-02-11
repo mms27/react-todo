@@ -4,9 +4,11 @@ var React = require('react'),
 Panel = React.createClass({
     render: function () {
         return (
-            <button onClick={this.props.onMarkRead}>Mark all as read</button>
-            <button onClick={this.props.onMarkUnRead}>Mark all as unread</button>
-        )
+            <div className='action-panel'>
+                <button onClick={this.props.onMarkRead}>Mark all as read</button>
+                <button onClick={this.props.onMarkUnRead}>Mark all as unread</button>
+            </div>
+        );
     }
 });
 

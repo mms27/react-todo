@@ -1,5 +1,4 @@
 var React 			= require('react'),
-	List  			= require('./list'),
 	Input 			= require('./input'),
 	_	  			= require('underscore'),
 	VisibilityPanel = require('./visibility_panel'),
@@ -13,35 +12,77 @@ Container = React.createClass({
 
 	addTodo: function (text) {
 		this.state.items.unshift({
+			visible: true,
+			read: false,
 			text: text,
 			id: _.uniqueId()
 		});
 		this.setState({ items: this.state.items });
 	},
 
-	removeTodo: function (e) {
-		var button 	= e.currentTarget,
-			id 		= button.getAttribute('data-item'),
-			items   = this.state.items,
-			target;
+	removeTodo: function (item) {
+		var items = this.state.items;
 
-		target = _.findWhere(items, { id: id });
-		items.splice(items.indexOf(target), 1);
+		items.splice(items.indexOf(item), 1);
+
 		this.setState({ items: items });
 	},
 
 	showAll: function () {
-		var items = this.state.items;
+		this.state.items.each(function (item) {
+			item.visible = true;
+		});
 
-		this.setState({ items: items });
+		this.setState({ items: this.state.items });
 	},
 
+	showRead: function () {
+		this.state.items.each(function (item) {
+			item.visible = item.read;
+		});
+
+		this.setState({ items: this.state.items });
+	},
+
+	showUnread: function () {
+		this.state.items.each(function (item) {
+			item.visible = !item.read;
+		});
+
+		this.setState({ items: this.state.items });
+	},
+
+	markRead: function (item) {
+		item.read = true;
+
+		this.setState({ items: this.state.items });
+	},
+
+	markUnread: function () {
+		item.read = false;
+
+		this.setState({ items: this.state.items });
+	}
+
 	render: function () {
-		return ( 
-			<div>
-				<h1>'Todo List'</h1>
+		var items,
+			removeTodo,
+			markRead,
+			markUnread;
+
+		items = this.state.items.map(function (item) {
+			removeTodo = this.removeTodo.bind(this, item);
+			markRead   = this.markRead.bind(this, item);
+			markUnread = this.markUnread.bind(this, item);
+
+			return <Item {...item} onTodoRemove={this.removeTodo} onMarkRead={this.markRead} />;
+		}, this);
+
+		return (
+			<div className='todo-container'>
+				<h1>Todo List</h1>
 				<Input onTodoAdd={this.addTodo} />
-				<List items={this.state.items} onTodoRemove={this.removeTodo} />
+				{items}
 				<VisibilityPanel onShowAll={this.showAll} onShowRead={this.showRead} onShowUnread={this.showUnread} />
 				<ActionPanel onMarkRead={this.markAllRead} onMarkUnread={this.markAllUnread} />
 			</div>

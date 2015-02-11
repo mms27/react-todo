@@ -2,29 +2,13 @@ var React = require('react'),
 	Item;
 
 Item = React.createClass({
-    getInitialState: function () {
-        return { read: false };
-    },
-
-    markRead: function () {
-        if (this.state.read) {
-            return;
-        }
-
-        this.setState({ read: true });
-    },
-
 	render: function () {
-        var style = {};
-
-        if (!this.state.read) {
-            style.fontWeight = 'bold';
-        }
-
 		return (
-            <div className='item' onClick={this.markRead} style={style}>
+            <div className='todo-item' onClick={this.markRead}>
                 <span>{this.props.text}</span>
-                <span onClick={this.props.onTodoRemove} className='remove' data-item={this.props.id}></span>
+                <span onClick={this.props.onTodoRemove}     className='button remove'       data-item={this.props.id}>Remove</span>
+                <span onClick={this.props.onTodoMarkRead}   className='button mark-read'    data-item={this.props.id}>Mark read</span>
+                <span onClick={this.props.onTodoMarkUnread} className='button mark-unread'  data-item={this.props.id}>Mark unread</span>
             </div>
         );
 	}

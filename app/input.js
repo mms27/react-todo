@@ -13,7 +13,7 @@ Input = React.createClass({
 	},
 
 	render: function () {
-		return <input ref="input" onKeyPress={this.addTodo} />;
+		return <input className='input' ref='input' onKeyPress={this.addTodo} />;
 	}
 });
 
