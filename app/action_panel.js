@@ -5,8 +5,8 @@ Panel = React.createClass({
     render: function () {
         return (
             <div className='action-panel'>
-                <button onClick={this.props.onMarkRead}>Mark all as read</button>
-                <button onClick={this.props.onMarkUnRead}>Mark all as unread</button>
+                <div className='button' onClick={this.props.onMarkComplete}>Mark All Complete</div>
+                <div className='button' onClick={this.props.onMarkUnComplete}>Mark All Incomplete</div>
             </div>
         );
     }

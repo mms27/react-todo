@@ -3,12 +3,14 @@ var React = require('react'),
 
 Item = React.createClass({
 	render: function () {
+        var className = 'todo-item' + (this.props.complete ? ' complete' : ''); 
+
 		return (
-            <div className='todo-item' onClick={this.markRead}>
+            <div className={className}>
                 <span>{this.props.text}</span>
-                <span onClick={this.props.onTodoRemove}     className='button remove'       data-item={this.props.id}>Remove</span>
-                <span onClick={this.props.onTodoMarkRead}   className='button mark-read'    data-item={this.props.id}>Mark read</span>
-                <span onClick={this.props.onTodoMarkUnread} className='button mark-unread'  data-item={this.props.id}>Mark unread</span>
+                <span onClick={this.props.onRemove}     className='button remove'>Remove</span>
+                <span onClick={this.props.onComplete}   className='button mark-complete'>Mark complete</span>
+                <span onClick={this.props.onIncomplete} className='button mark-incomplete'>Mark incomplete</span>
             </div>
         );
 	}
