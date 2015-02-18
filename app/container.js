@@ -4,7 +4,6 @@ var React 			= require('react'),
 	Input 			= require('./input'),
 	List 			= require('./list'),
 	VisibilityPanel = require('./visibility_panel'),
-	ActionPanel 	= require('./action_panel'),
 	_	  			= require('underscore'),
 	Container;
 
@@ -36,12 +35,28 @@ Container = React.createClass({
 		this.setState({ items: items });
 	},
 
-	getSwitcher: function (prop) {
-		return function (item, value) {
+	getSwitcher: function (prop, item, value) {
+		return function () {
 			item[prop] = value;
 
-			this.setState({ items: this.state.items });
+			this.setState({ items: this.state.items });	
 		}.bind(this);
+	},
+
+	showAll: function () {
+		this.state.items.forEach(function (item) {
+			item.visible = true;
+		});
+
+		this.setState({ items: this.state.items });
+	},
+
+	show: function (complete) {
+		this.state.items.forEach(function (item) {
+			item.visible = complete ? item.complete : !item.complete;
+		});
+
+		this.setState({ items: this.state.items });
 	},
 
 	render: function () {
@@ -53,16 +68,12 @@ Container = React.createClass({
 				<List
 					items={this.state.items}
 					completeSwitcher={this.getSwitcher.bind(this, 'complete')}
-					onRemove={this.props.removeTodo} />
+					onRemove={this.removeTodo} />
 
 				<VisibilityPanel
 					onShowAll={this.showAll}
-					onShowComplete={this.showComplete}
-					onShowIncomplete={this.showIncomplete} />
-
-				<ActionPanel
-					onMarkComplete={this.markAllComplete}
-					onMarkIncomplete={this.markAllIncomplete} />
+					onShowComplete={this.show.bind(this, true)}
+					onShowIncomplete={this.show.bind(this, false)} />
 			</div>
 		);
 	}

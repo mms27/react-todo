@@ -8,14 +8,17 @@ List = React.createClass({
 			items,
 			remove;
 
-		items = this.props.items.map(function (item) {
+		function isVisible(item) { return item.visible; };
 
+		function createItem(item) {
 			return <Item
 				{...item}
 				onComplete={completeSwitcher(item, true)}
 				onIncomplete={completeSwitcher(item, false)}
 				onRemove={this.props.onRemove} />
-		}, this);
+		};
+
+		items = this.props.items.filter(isVisible).map(createItem, this);
 
 		return <div className='todo-list'>{items}</div>;
 	}

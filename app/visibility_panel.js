@@ -6,8 +6,8 @@ Panel = React.createClass({
         return (
             <div className='visibility-panel'>
                 <div className='button' onClick={this.props.onShowAll}>Show all</div>
-                <div className='button' onClick={this.props.onShowRead}>Show read</div>
-                <div className='button' onClick={this.props.onShowUnread}>Show unread</div>
+                <div className='button' onClick={this.props.onShowComplete}>Show read</div>
+                <div className='button' onClick={this.props.onShowIncomplete}>Show unread</div>
             </div>
         );
     }
